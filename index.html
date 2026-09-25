@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>年末調整 還付金シミュレーター</title>
+<meta name="description" content="年収・生命保険料控除・扶養状況を入れるだけで、年末調整でいくら戻ってくるか(還付金)の目安をすぐに計算できる無料ツールです。なぜ還付されるのかの仕組みもわかりやすく解説します。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://webtools-labs.com/nencho-kanpu-keisan/">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2370765779014113" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NKK5TXCQEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NKK5TXCQEK');
+</script>
+<script>
+(function () {
+  var fired = false;
+  function fireOnce() {
+    if (fired) return;
+    fired = true;
+    if (typeof gtag === 'function') gtag('event', 'tool_used', { tool_name: document.title });
+  }
+  document.addEventListener('input', fireOnce, true);
+  document.addEventListener('change', fireOnce, true);
+})();
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230f766e'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='white' font-family='sans-serif'%3E%EF%BF%A5%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="webtools-labs">
+<meta property="og:title" content="年末調整 還付金シミュレーター">
+<meta property="og:description" content="年収・生命保険料控除・扶養状況を入れるだけで、年末調整の還付金の目安をすぐに計算できます。">
+<meta property="og:url" content="https://webtools-labs.com/nencho-kanpu-keisan/">
+<meta property="og:image" content="https://webtools-labs.com/nencho-kanpu-keisan/og-image.png">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="年末調整 還付金シミュレーター">
+<meta name="twitter:description" content="年収や生命保険料控除を入れるだけで、年末調整で戻ってくる金額の目安をすぐ計算できる無料ツール。">
+<meta name="twitter:image" content="https://webtools-labs.com/nencho-kanpu-keisan/og-image.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "年末調整 還付金シミュレーター",
+  "url": "https://webtools-labs.com/nencho-kanpu-keisan/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "description": "年収・生命保険料控除・扶養状況を入れるだけで、年末調整でいくら戻ってくるか(還付金)の目安を計算できる無料ツール。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+  "inLanguage": "ja"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "そもそも年末調整とは何ですか？",
+      "acceptedAnswer": { "@type": "Answer", "text": "毎月の給与から天引きされている所得税(源泉徴収税額)は、生命保険料控除などを考慮しない仮の金額です。年末に扶養控除等申告書・保険料控除申告書を勤務先に提出することで、控除を正しく反映した本来の年税額が確定し、天引きされすぎていた分が還付される(逆に不足していれば追加徴収される)手続きのことです。" }
+    },
+    {
+      "@type": "Question",
+      "name": "なぜ年末調整で還付金が戻ってくるのですか？",
+      "acceptedAnswer": { "@type": "Answer", "text": "毎月の源泉徴収額は、生命保険料控除や地震保険料控除を反映せずに計算されています。年末調整でこれらの控除を申告すると課税所得が下がり、本来の年税額が毎月の仮計算より少なくなるため、その差額が還付されます。" }
+    },
+    {
+      "@type": "Question",
+      "name": "生命保険料控除証明書はいつ届きますか？",
+      "acceptedAnswer": { "@type": "Answer", "text": "多くの保険会社では10月頃から11月上旬にかけて、契約者宛に「生命保険料控除証明書」がハガキや電子データで送付されます。年末調整の書類提出期限までに手元に用意しておく必要があります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "ふるさと納税は年末調整に含まれますか？",
+      "acceptedAnswer": { "@type": "Answer", "text": "ワンストップ特例制度を利用している場合は年末調整に含める必要はなく、自動的に翌年度の住民税から控除されます。一方、ワンストップ特例を使わず確定申告で控除を受ける場合は、年末調整とは別に自分で確定申告をする必要があります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "住宅ローン控除は年末調整で戻ってきますか？",
+      "acceptedAnswer": { "@type": "Answer", "text": "住宅ローン控除は、控除を受け始める1年目は自分で確定申告をする必要がありますが、2年目以降は勤務先に必要書類を提出することで年末調整に含めることができます。本ツールは住宅ローン控除を計算に含めていないため、対象の方は別途ご注意ください。" }
+    },
+    {
+      "@type": "Question",
+      "name": "扶養控除の対象になる家族の範囲を教えてください。",
+      "acceptedAnswer": { "@type": "Answer", "text": "年間の合計所得金額が48万円以下(給与収入のみなら年収103万円以下が目安)の16歳以上の親族が、一般的な扶養控除(38万円)の対象です。19歳以上23歳未満の特定扶養親族や70歳以上の老人扶養親族は控除額が異なりますが、本ツールでは簡易化のため一律38万円で計算しています。" }
+    },
+    {
+      "@type": "Question",
+      "name": "年末調整で追加徴収になることはありますか？",
+      "acceptedAnswer": { "@type": "Answer", "text": "はい。年の途中で昇給や賞与の増加があった場合、毎月の源泉徴収が実際の年税額に対して少なめになっていることがあり、その場合は年末調整で不足分が追加徴収されます。扶養家族が年の途中で減った場合なども同様です。" }
+    }
+  ]
+}
+</script>
+<style>
+:root {
+  --bg: #ffffff;
+  --surface-2: #f7f7f7;
+  --ink: #1a1a1a;
+  --muted: #767676;
+  --line: #e3e3e3;
+  --accent: #0f766e;
+  --best-bg: #f0f8f6;
+  --warn-bg: #fff7ed;
+  --warn-ink: #9a5b00;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+header.masthead { margin-bottom: 1.5rem; }
+h1 {
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4.5vw, 1.7rem);
+  margin: 0 0 0.7rem;
+  letter-spacing: 0.01em;
+}
+p.lede { color: var(--muted); margin: 0; max-width: 60ch; font-size: 0.95rem; }
+.updated-note { display: block; margin-top: 0.9rem; font-size: 0.78rem; color: var(--muted); }
+
+.notice-box {
+  background: var(--warn-bg); color: var(--warn-ink); border-radius: 8px;
+  padding: 0.9rem 1.1rem; font-size: 0.85rem; margin-bottom: 2rem;
+}
+
+section { margin-bottom: 2.5rem; }
+h2 { font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem; }
+
+.field-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.field { flex: 1; min-width: 160px; }
+.field label { display: block; font-size: 0.83rem; color: var(--muted); margin-bottom: 0.35rem; }
+.field input[type="number"], .field select {
+  width: 100%; font-variant-numeric: tabular-nums; font-size: 1.05rem; font-family: inherit;
+  padding: 0.55rem 0.7rem; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--bg); color: var(--ink);
+}
+.field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+.field-hint { font-size: 0.76rem; color: var(--muted); margin-top: 0.3rem; }
+
+.check-row { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 1.25rem; font-size: 0.86rem; }
+.check-row input { margin-top: 0.2rem; }
+
+.summary-cards { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+.summary-card {
+  flex: 1; min-width: 180px; background: var(--best-bg); border-radius: 10px;
+  padding: 1rem 1.2rem;
+}
+.summary-card.warn { background: var(--warn-bg); }
+.summary-card .label { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem; }
+.summary-card .value { font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.summary-card .sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+table.compare { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+table.compare th, table.compare td {
+  padding: 0.55rem 0.5rem; text-align: right; border-bottom: 1px solid var(--line); vertical-align: top;
+}
+table.compare th:first-child, table.compare td:first-child { text-align: left; }
+table.compare thead th { color: var(--muted); font-weight: 500; font-size: 0.78rem; }
+table.compare td.num { font-variant-numeric: tabular-nums; }
+tr.best td { font-weight: 700; }
+tr.best { background: var(--best-bg); }
+tr.na td { color: var(--muted); }
+
+.ref-table { overflow-x: auto; }
+.ref-table table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 460px; }
+.ref-table th, .ref-table td { padding: 0.5rem 0.5rem; border-bottom: 1px solid var(--line); text-align: left; }
+.ref-table td.num { font-variant-numeric: tabular-nums; text-align: right; }
+
+.disclaimer { font-size: 0.78rem; color: var(--muted); margin-top: 1rem; }
+
+.share-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.1rem; }
+.share-btn {
+  display: inline-flex; align-items: center; padding: 0.5rem 1rem; border-radius: 999px;
+  color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 700;
+}
+.share-btn:hover { opacity: 0.85; }
+.share-x { background: #000; }
+.share-line { background: #06c755; }
+.share-fb { background: #1877f2; }
+.share-hatena { background: #00a4de; }
+
+.ad-slot { margin: 2.5rem 0; text-align: center; min-height: 100px; }
+
+.pr-box {
+  border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px;
+  padding: 1.2rem 1.3rem; margin: 2.5rem 0; background: var(--best-bg);
+}
+.pr-box .pr-label {
+  display: inline-flex; align-items: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  color: #fff; background: var(--accent); border-radius: 999px;
+  padding: 0.2rem 0.7rem; margin-bottom: 0.8rem;
+}
+.pr-box p.pr-lede { color: var(--ink); font-size: 0.92rem; margin: 0 0 1rem; max-width: none; line-height: 1.7; }
+.pr-box .pr-banner { text-align: center; }
+
+.contact-box textarea {
+  width: 100%; min-height: 6rem; font-family: inherit; font-size: 0.92rem;
+  padding: 0.7rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink);
+  resize: vertical; margin-bottom: 0.6rem;
+}
+.contact-box input[type="email"] {
+  width: 100%; font-family: inherit; font-size: 0.92rem;
+  padding: 0.6rem 0.7rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+.contact-box textarea:focus, .contact-box input:focus { outline: none; border-color: var(--accent); }
+.contact-box button {
+  font-family: inherit; font-weight: 700; font-size: 0.9rem; padding: 0.6rem 1.4rem;
+  border: none; border-radius: 6px; background: var(--accent); color: #fff; cursor: pointer;
+}
+.contact-box button:disabled { opacity: 0.5; cursor: not-allowed; }
+.contact-status { font-size: 0.85rem; margin-top: 0.6rem; }
+.contact-status.ok { color: var(--accent); }
+.contact-status.err { color: #b91c1c; }
+
+footer.site-footer {
+  margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+  font-size: 0.78rem; color: var(--muted);
+}
+footer.site-footer p { margin: 0 0 0.5rem; }
+footer.site-footer a { color: var(--accent); }
+
+.faq-item { border-bottom: 1px solid var(--line); padding: 0.9rem 0; }
+.faq-item:last-child { border-bottom: none; }
+.faq-item summary {
+  cursor: pointer; font-weight: 700; font-size: 0.92rem; list-style: none;
+  position: relative; padding-right: 1.6rem;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+'; position: absolute; right: 0; top: 0; color: var(--accent); font-weight: 700; font-size: 1.1rem;
+}
+.faq-item[open] summary::after { content: '−'; }
+.faq-item p { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.88rem; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="masthead">
+    <h1>年末調整 還付金シミュレーター</h1>
+    <p class="lede">年収・生命保険料控除・扶養状況を入力するだけで、年末調整でいくら戻ってくるか(還付金)の目安をすぐに計算します。なぜお金が戻ってくるのか、その仕組みもあわせてわかります。</p>
+    <span class="updated-note">計算式 最終確認日: 2026年9月25日</span>
+  </header>
+
+  <div class="notice-box">
+    ⚠️ 本ツールは年末調整の仕組みを簡易的に再現した概算計算です。実際の還付額は勤務先の計算方法、賞与の支給時期、住宅ローン控除、ふるさと納税(ワンストップ特例未使用の場合)などによって変わります。正確な金額は源泉徴収票や勤務先の給与担当にご確認ください。
+  </div>
+
+  <section>
+    <h2>年末調整で還付金が戻ってくる仕組み</h2>
+    <p>会社員の所得税は、毎月の給与から「源泉徴収」という形であらかじめ天引きされています。ただしこの毎月の天引き額は、生命保険料控除や地震保険料控除といった、年末調整でしか反映されない控除を考慮していない、いわば仮の金額です。</p>
+    <p>年末になると、生命保険会社などから届く控除証明書をもとに、扶養控除等申告書・保険料控除申告書を勤務先に提出します。これにより、毎月の仮の税額計算では反映されていなかった控除が正しく反映され、本来の年間所得税額が確定します。仮の税額の方が多く天引きされていた場合、その差額が「還付金」として12月または1月の給与で戻ってきます。</p>
+    <p>逆に、年の途中で給与や賞与が想定より増えた場合などは、天引きされていた税額が本来より少なく、追加で徴収されることもあります。</p>
+  </section>
+
+  <section>
+    <h2>あなたの状況を入力</h2>
+    <div class="field-row">
+      <div class="field">
+        <label for="income">額面年収（円）</label>
+        <input type="number" id="income" min="0" step="10000" value="4000000">
+      </div>
+      <div class="field">
+        <label for="ageGroup">年齢区分</label>
+        <select id="ageGroup">
+          <option value="under40">40歳未満</option>
+          <option value="over40">40歳以上65歳未満（介護保険料あり）</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="dependents">扶養親族の人数（配偶者以外）</label>
+        <input type="number" id="dependents" min="0" step="1" value="1">
+      </div>
+      <div class="field">
+        <label for="lifeInsurance">生命保険料控除額（円・上限12万円）</label>
+        <input type="number" id="lifeInsurance" min="0" max="120000" step="1000" value="40000">
+      </div>
+      <div class="field">
+        <label for="earthquakeInsurance">地震保険料控除額（円・上限5万円）</label>
+        <input type="number" id="earthquakeInsurance" min="0" max="50000" step="1000" value="20000">
+      </div>
+    </div>
+
+    <label class="check-row">
+      <input type="checkbox" id="hasSpouse" checked>
+      <span>配偶者控除を受ける（配偶者の年収103万円以下、本人の年収1,095万円以下が目安）</span>
+    </label>
+
+    <div class="summary-cards" id="summaryCards"></div>
+
+    <div style="overflow-x:auto">
+      <table class="compare">
+        <thead>
+          <tr><th>項目</th><th class="num">金額</th></tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+      </table>
+    </div>
+    <p class="disclaimer">社会保険料は額面年収のおよそ14.7%(40歳未満)・15.5%(40歳以上)の概算率で計算しています。扶養控除は特定扶養・老人扶養などの割増を考慮せず、一律38万円で簡易計算しています。住宅ローン控除・ふるさと納税(ワンストップ特例未使用分)は含まれていません。</p>
+    <div class="share-row" id="shareRow">
+      <a class="share-btn share-x" id="shareX" href="#" target="_blank" rel="noopener">𝕏でシェア</a>
+      <a class="share-btn share-line" id="shareLine" href="#" target="_blank" rel="noopener">LINEで送る</a>
+      <a class="share-btn share-fb" id="shareFb" href="#" target="_blank" rel="noopener">Facebookでシェア</a>
+      <a class="share-btn share-hatena" id="shareHatena" href="#" target="_blank" rel="noopener">はてブする</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>保険料控除による還付金の違い（年収400万円・独身の場合）</h2>
+    <div class="ref-table">
+      <table>
+        <thead><tr><th>控除の内容</th><th class="num">年末調整後の年税額</th><th class="num">還付金の目安</th></tr></thead>
+        <tbody>
+          <tr><td>生命保険料控除・地震保険料控除ともになし</td><td class="num">86,377円</td><td class="num">0円</td></tr>
+          <tr><td>生命保険料控除4万円のみ</td><td class="num">84,335円</td><td class="num">2,042円</td></tr>
+          <tr><td>生命保険料控除4万円＋地震保険料控除2万円</td><td class="num">83,314円</td><td class="num">3,063円</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="disclaimer">扶養控除等申告書だけでなく保険料控除申告書もあわせて提出しないと、これらの控除は反映されません。控除証明書が届いたら早めに勤務先へ提出しましょう。</p>
+  </section>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-2370765779014113"
+      data-ad-slot="3021985784"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class="pr-box">
+    <span class="pr-label">PR</span>
+    <p class="pr-lede">年末調整で戻ってきたお金の使い道を考えるなら、日々の支払いの還元率を見直してみませんか。年会費無料で貯まりやすいカードなら、実質的な手取りアップにつながります。</p>
+    <div class="pr-banner">
+      <script type='text/javascript' src='https://ad-verification.a8.net/ad/js/brandsafe.js'></script>
+      <div id='div_admane_async_1734_658_2972'>
+      <script type='text/javascript'>
+      <!--
+      brandsafe_js_async('//ad-verification.a8.net/ad', '_site=1734&_article=658&_link=2972&_image=3219&_ns=1&sad=s00000015110002', '260907514413', '4BC5IY+6TW2E2+38L8+BXYE9');
+      //-->
+      </script>
+      </div>
+      <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4BC5IY+6TW2E2+38L8+BXYE9" alt="">
+    </div>
+  </div>
+
+  <section>
+    <h2>よくある質問</h2>
+    <details class="faq-item">
+      <summary>そもそも年末調整とは何ですか？</summary>
+      <p>毎月の給与から天引きされている所得税(源泉徴収税額)は、生命保険料控除などを考慮しない仮の金額です。年末に扶養控除等申告書・保険料控除申告書を勤務先に提出することで、控除を正しく反映した本来の年税額が確定し、天引きされすぎていた分が還付される(逆に不足していれば追加徴収される)手続きのことです。</p>
+    </details>
+    <details class="faq-item">
+      <summary>なぜ年末調整で還付金が戻ってくるのですか？</summary>
+      <p>毎月の源泉徴収額は、生命保険料控除や地震保険料控除を反映せずに計算されています。年末調整でこれらの控除を申告すると課税所得が下がり、本来の年税額が毎月の仮計算より少なくなるため、その差額が還付されます。</p>
+    </details>
+    <details class="faq-item">
+      <summary>生命保険料控除証明書はいつ届きますか？</summary>
+      <p>多くの保険会社では10月頃から11月上旬にかけて、契約者宛に「生命保険料控除証明書」がハガキや電子データで送付されます。年末調整の書類提出期限までに手元に用意しておく必要があります。</p>
+    </details>
+    <details class="faq-item">
+      <summary>ふるさと納税は年末調整に含まれますか？</summary>
+      <p>ワンストップ特例制度を利用している場合は年末調整に含める必要はなく、自動的に翌年度の住民税から控除されます。一方、ワンストップ特例を使わず確定申告で控除を受ける場合は、年末調整とは別に自分で確定申告をする必要があります。</p>
+    </details>
+    <details class="faq-item">
+      <summary>住宅ローン控除は年末調整で戻ってきますか？</summary>
+      <p>住宅ローン控除は、控除を受け始める1年目は自分で確定申告をする必要がありますが、2年目以降は勤務先に必要書類を提出することで年末調整に含めることができます。本ツールは住宅ローン控除を計算に含めていないため、対象の方は別途ご注意ください。</p>
+    </details>
+    <details class="faq-item">
+      <summary>扶養控除の対象になる家族の範囲を教えてください。</summary>
+      <p>年間の合計所得金額が48万円以下(給与収入のみなら年収103万円以下が目安)の16歳以上の親族が、一般的な扶養控除(38万円)の対象です。19歳以上23歳未満の特定扶養親族や70歳以上の老人扶養親族は控除額が異なりますが、本ツールでは簡易化のため一律38万円で計算しています。</p>
+    </details>
+    <details class="faq-item">
+      <summary>年末調整で追加徴収になることはありますか？</summary>
+      <p>はい。年の途中で昇給や賞与の増加があった場合、毎月の源泉徴収が実際の年税額に対して少なめになっていることがあり、その場合は年末調整で不足分が追加徴収されます。扶養家族が年の途中で減った場合なども同様です。</p>
+    </details>
+  </section>
+
+  <section class="contact-box">
+    <h2>ご意見・追加してほしい機能</h2>
+    <p class="lede" style="margin-bottom:0.9rem;">気づいたことや、あったら便利な機能があれば教えてください。</p>
+    <form id="contactForm">
+      <input type="email" id="contactEmail" placeholder="返信が必要な場合はメールアドレス（任意）">
+      <textarea id="contactMessage" placeholder="ご意見・ご要望をどうぞ" required></textarea>
+      <button type="submit" id="contactSubmit">送信する</button>
+      <p class="contact-status" id="contactStatus"></p>
+    </form>
+  </section>
+
+  <footer class="site-footer">
+    <p>本ツールの金額は概算率にもとづく簡易計算であり、正確性を保証するものではありません。住宅ローン控除やふるさと納税(ワンストップ特例未使用分)は考慮していません。正確な還付額は源泉徴収票や勤務先の給与担当にご確認ください。</p>
+    <p>あわせて使える：
+      <a href="https://webtools-labs.com/furima-hikaku-keisan/">フリマ手数料計算・比較ツール</a> ／
+      <a href="https://webtools-labs.com/furima-hasso-hikaku/">フリマ配送方法・送料比較ツール</a> ／
+      <a href="https://webtools-labs.com/furima-tedori-simulator/">フリマ手取りシミュレーター</a> ／
+      <a href="https://webtools-labs.com/yukyu-hiyou-keisan/">有給休暇 付与日数計算ツール</a> ／
+      <a href="https://webtools-labs.com/revolving-risoku-keisan/">リボ払い・分割払い 実質利息計算ツール</a> ／
+      <a href="https://webtools-labs.com/taishoku-yukyu-keisan/">退職時の有給消化シミュレーター</a> ／
+      <a href="https://webtools-labs.com/fuyou-no-kabe-keisan/">扶養の壁チェッカー</a> ／
+      <a href="https://webtools-labs.com/tedori-keisan/">手取り計算ツール</a> ／
+      <a href="https://webtools-labs.com/taishokukin-zei-keisan/">退職金の税金計算ツール</a> ／
+      <a href="https://webtools-labs.com/sankyu-ikuji-teate-keisan/">産休・育休手当金シミュレーター</a> ／
+      <a href="https://webtools-labs.com/zangyodai-keisan/">残業代計算ツール</a> ／
+      <a href="https://webtools-labs.com/shitsugyo-hoken-keisan/">失業保険（基本手当）シミュレーター</a> ／
+      <a href="https://webtools-labs.com/jikyu-nenshu-keisan/">時給から年収・月収を計算</a> ／
+      <a href="https://webtools-labs.com/yubin-kitte-keisan/">郵便物の切手代早見表</a> ／
+      <a href="https://webtools-labs.com/bonus-tedori-keisan/">賞与手取り計算ツール</a> ／
+      <a href="https://webtools-labs.com/shoubyou-teate-keisan/">傷病手当金計算ツール</a> ／
+      <a href="https://webtools-labs.com/juminzei-keisan/">住民税計算ツール</a> ／
+      <a href="https://webtools-labs.com/tsukin-teate-keisan/">通勤手当の非課税限度額計算ツール</a> ／
+      <a href="https://webtools-labs.com/tedori-gyakusan-keisan/">手取りから逆算する年収計算ツール</a> ／
+      <a href="https://webtools-labs.com/shakaihoken-uchiwake-keisan/">給与の社会保険料 内訳計算ツール</a> ／
+      <a href="https://webtools-labs.com/fukugyo-shinkoku-keisan/">副業の確定申告 要否チェッカー</a>
+    </p>
+    <p>当サイトは広告を掲載する場合があります。</p>
+    <p><a href="https://webtools-labs.com/about/">運営者情報</a> ／ <a href="https://webtools-labs.com/privacy/">プライバシーポリシー</a></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  function yen(n) { return Math.round(n).toLocaleString('ja-JP') + '円'; }
+
+  var BASIC_DEDUCTION = 480000;
+  var SPOUSE_DEDUCTION = 380000;
+  var DEPENDENT_DEDUCTION = 380000;
+
+  function salaryDeduction(income) {
+    if (income <= 1625000) return 550000;
+    if (income <= 1800000) return Math.round(income * 0.4 - 100000);
+    if (income <= 3600000) return Math.round(income * 0.3 + 80000);
+    if (income <= 6600000) return Math.round(income * 0.2 + 440000);
+    if (income <= 8500000) return Math.round(income * 0.1 + 1100000);
+    return 1950000;
+  }
+
+  function socialInsurance(income, ageGroup) {
+    var rate = ageGroup === 'over40' ? 0.155 : 0.147;
+    return Math.round(income * rate);
+  }
+
+  function incomeTax(taxableIncome) {
+    var t = Math.max(0, taxableIncome);
+    var base;
+    if (t <= 1950000) base = t * 0.05;
+    else if (t <= 3300000) base = t * 0.10 - 97500;
+    else if (t <= 6950000) base = t * 0.20 - 427500;
+    else if (t <= 9000000) base = t * 0.23 - 636000;
+    else if (t <= 18000000) base = t * 0.33 - 1536000;
+    else if (t <= 40000000) base = t * 0.40 - 2796000;
+    else base = t * 0.45 - 4796000;
+    base = Math.max(0, base);
+    return Math.round(base * 1.021);
+  }
+
+  function calc(income, ageGroup, hasSpouse, dependents, lifeInsurance, earthquakeInsurance) {
+    var salaryIncome = Math.max(0, income - salaryDeduction(income));
+    var socialIns = socialInsurance(income, ageGroup);
+    var baseTaxable = Math.max(0, salaryIncome - socialIns - BASIC_DEDUCTION - (hasSpouse ? SPOUSE_DEDUCTION : 0) - dependents * DEPENDENT_DEDUCTION);
+    var baseTax = incomeTax(baseTaxable);
+
+    var finalTaxable = Math.max(0, baseTaxable - lifeInsurance - earthquakeInsurance);
+    var finalTax = incomeTax(finalTaxable);
+
+    var refund = baseTax - finalTax;
+    return { income: income, socialIns: socialIns, baseTaxable: baseTaxable, baseTax: baseTax, finalTaxable: finalTaxable, finalTax: finalTax, refund: refund };
+  }
+
+  var incomeInput = document.getElementById('income');
+  var ageGroupSelect = document.getElementById('ageGroup');
+  var dependentsInput = document.getElementById('dependents');
+  var lifeInsuranceInput = document.getElementById('lifeInsurance');
+  var earthquakeInsuranceInput = document.getElementById('earthquakeInsurance');
+  var hasSpouseCheckbox = document.getElementById('hasSpouse');
+  var summaryCards = document.getElementById('summaryCards');
+  var resultBody = document.getElementById('resultBody');
+  var shareX = document.getElementById('shareX');
+  var shareLine = document.getElementById('shareLine');
+  var shareFb = document.getElementById('shareFb');
+  var shareHatena = document.getElementById('shareHatena');
+
+  function setShareLinks(text, url) {
+    shareX.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+    shareLine.href = 'https://line.me/R/msg/text/?' + encodeURIComponent(text + '\n' + url);
+    shareFb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&quote=' + encodeURIComponent(text);
+    shareHatena.href = 'https://b.hatena.ne.jp/entry/panel/?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(text);
+  }
+
+  function render() {
+    var income = Math.max(0, Number(incomeInput.value) || 0);
+    var ageGroup = ageGroupSelect.value;
+    var dependents = Math.max(0, Number(dependentsInput.value) || 0);
+    var lifeInsurance = Math.min(120000, Math.max(0, Number(lifeInsuranceInput.value) || 0));
+    var earthquakeInsurance = Math.min(50000, Math.max(0, Number(earthquakeInsuranceInput.value) || 0));
+    var hasSpouse = hasSpouseCheckbox.checked;
+    var r = calc(income, ageGroup, hasSpouse, dependents, lifeInsurance, earthquakeInsurance);
+
+    var isRefund = r.refund >= 0;
+
+    summaryCards.innerHTML =
+      '<div class="summary-card ' + (isRefund ? '' : 'warn') + '"><div class="label">' + (isRefund ? '還付される見込み額' : '追加徴収される見込み額') + '</div><div class="value">' + yen(Math.abs(r.refund)) + '</div><div class="sub">12月または1月の給与で調整されるのが一般的です</div></div>' +
+      '<div class="summary-card"><div class="label">年末調整後の年税額</div><div class="value">' + yen(r.finalTax) + '</div><div class="sub">生命保険料控除・地震保険料控除を反映後</div></div>';
+
+    var rows = [
+      ['毎月の源泉徴収をもとにした年税額の概算（保険料控除を反映する前）', yen(r.baseTax)],
+      ['生命保険料控除', '-' + yen(lifeInsurance)],
+      ['地震保険料控除', '-' + yen(earthquakeInsurance)],
+      ['年末調整後の正しい年税額', yen(r.finalTax)],
+      [isRefund ? '還付される見込み額' : '追加徴収される見込み額', yen(Math.abs(r.refund))]
+    ];
+    resultBody.innerHTML = rows.map(function (row, i) {
+      var isLast = i === rows.length - 1;
+      return '<tr class="' + (isLast ? 'best' : '') + '"><td>' + row[0] + '</td><td class="num">' + row[1] + '</td></tr>';
+    }).join('');
+
+    var shareText = '年末調整をシミュレーションしたら' + (isRefund ? '還付金' + yen(r.refund) + 'が戻ってきそうでした' : '追加徴収' + yen(Math.abs(r.refund)) + 'になりそうでした') + '\n\n年末調整 還付金シミュレーター';
+    setShareLinks(shareText, 'https://webtools-labs.com/nencho-kanpu-keisan/');
+  }
+
+  incomeInput.addEventListener('input', render);
+  ageGroupSelect.addEventListener('change', render);
+  dependentsInput.addEventListener('input', render);
+  lifeInsuranceInput.addEventListener('input', render);
+  earthquakeInsuranceInput.addEventListener('input', render);
+  hasSpouseCheckbox.addEventListener('change', render);
+
+  render();
+
+  var WEB3FORMS_ACCESS_KEY = '4551c9fd-4327-4bd4-97e0-8b93d85fd077';
+  var contactForm = document.getElementById('contactForm');
+  var contactStatus = document.getElementById('contactStatus');
+  var contactSubmit = document.getElementById('contactSubmit');
+
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    contactSubmit.disabled = true;
+    contactStatus.textContent = '送信中...';
+    contactStatus.className = 'contact-status';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: '年末調整 還付金シミュレーターへのお問い合わせ',
+        email: document.getElementById('contactEmail').value || 'noreply@example.com',
+        message: document.getElementById('contactMessage').value
+      })
+    }).then(function (res) { return res.json(); }).then(function (data) {
+      contactSubmit.disabled = false;
+      if (data.success) {
+        contactStatus.textContent = '送信しました。ありがとうございます！';
+        contactStatus.className = 'contact-status ok';
+        contactForm.reset();
+      } else {
+        contactStatus.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+        contactStatus.className = 'contact-status err';
+      }
+    }).catch(function () {
+      contactSubmit.disabled = false;
+      contactStatus.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+      contactStatus.className = 'contact-status err';
+    });
+  });
+})();
+</script>
+</body>
+</html>
