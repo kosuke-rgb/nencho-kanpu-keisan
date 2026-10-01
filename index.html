@@ -97,6 +97,16 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://webtools-labs.com/" },
+    { "@type": "ListItem", "position": 2, "name": "年末調整 還付金シミュレーター" }
+  ]
+}
+</script>
 <style>
 :root {
   --bg: #ffffff;
@@ -243,10 +253,14 @@ footer.site-footer a { color: var(--accent); }
 }
 .faq-item[open] summary::after { content: '−'; }
 .faq-item p { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.88rem; }
+.breadcrumb { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.1rem; }
+.breadcrumb a { color: var(--accent); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div class="page">
+  <nav class="breadcrumb" aria-label="パンくずリスト"><a href="https://webtools-labs.com/">ホーム</a> / 年末調整 還付金シミュレーター</nav>
   <header class="masthead">
     <h1>年末調整 還付金シミュレーター</h1>
     <p class="lede">年収・生命保険料控除・扶養状況を入力するだけで、年末調整でいくら戻ってくるか(還付金)の目安をすぐに計算します。なぜお金が戻ってくるのか、その仕組みもあわせてわかります。</p>
