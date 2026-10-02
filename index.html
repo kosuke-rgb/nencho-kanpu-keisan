@@ -87,7 +87,7 @@
     {
       "@type": "Question",
       "name": "扶養控除の対象になる家族の範囲を教えてください。",
-      "acceptedAnswer": { "@type": "Answer", "text": "年間の合計所得金額が58万円以下(給与収入のみなら年収132万円以下が目安、令和7年度税制改正により48万円/103万円から引き上げ)の16歳以上の親族が、一般的な扶養控除(38万円)の対象です。19歳以上23歳未満の特定扶養親族や70歳以上の老人扶養親族は控除額が異なりますが、本ツールでは簡易化のため一律38万円で計算しています。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "年間の合計所得金額が62万円以下(給与収入のみなら年収136万円以下が目安、令和7・8年度税制改正により48万円/103万円から引き上げ)の16歳以上の親族が、一般的な扶養控除(38万円)の対象です。19歳以上23歳未満の特定扶養親族や70歳以上の老人扶養親族は控除額が異なりますが、本ツールでは簡易化のため一律38万円で計算しています。" }
     },
     {
       "@type": "Question",
@@ -269,7 +269,7 @@ footer.site-footer a { color: var(--accent); }
   <header class="masthead">
     <h1>年末調整 還付金シミュレーター</h1>
     <p class="lede">年収・生命保険料控除・扶養状況を入力するだけで、年末調整でいくら戻ってくるか(還付金)の目安をすぐに計算します。なぜお金が戻ってくるのか、その仕組みもあわせてわかります。</p>
-    <span class="updated-note">計算式 最終確認日: 2026年9月27日（令和7・8年度税制改正の基礎控除・給与所得控除の見直しに対応済み）</span>
+    <span class="updated-note">計算式 最終確認日: 2026年10月2日（令和8年度税制改正の基礎控除（合計所得489万円以下は104万円）に対応、令和7・8年度税制改正の基礎控除・給与所得控除の見直しに対応済み）</span>
   </header>
 
   <div class="notice-box">
@@ -315,7 +315,7 @@ footer.site-footer a { color: var(--accent); }
 
     <label class="check-row">
       <input type="checkbox" id="hasSpouse" checked>
-      <span>配偶者控除を受ける（配偶者の年収132万円以下が目安※令和7年度税制改正で103万円から引き上げ、本人の年収1,095万円以下が目安）</span>
+      <span>配偶者控除を受ける（配偶者の年収136万円以下が目安※令和7・8年度税制改正で103万円から引き上げ、本人の年収1,095万円以下が目安）</span>
     </label>
 
     <div class="summary-cards" id="summaryCards"></div>
@@ -343,9 +343,9 @@ footer.site-footer a { color: var(--accent); }
       <table>
         <thead><tr><th>控除の内容</th><th class="num">年末調整後の年税額</th><th class="num">還付金の目安</th></tr></thead>
         <tbody>
-          <tr><td>生命保険料控除・地震保険料控除ともになし</td><td class="num">65,957円</td><td class="num">0円</td></tr>
-          <tr><td>生命保険料控除4万円のみ</td><td class="num">63,915円</td><td class="num">2,042円</td></tr>
-          <tr><td>生命保険料控除4万円＋地震保険料控除2万円</td><td class="num">62,894円</td><td class="num">3,063円</td></tr>
+          <tr><td>生命保険料控除・地震保険料控除ともになし</td><td class="num">57,789円</td><td class="num">0円</td></tr>
+          <tr><td>生命保険料控除4万円のみ</td><td class="num">55,747円</td><td class="num">2,042円</td></tr>
+          <tr><td>生命保険料控除4万円＋地震保険料控除2万円</td><td class="num">54,726円</td><td class="num">3,063円</td></tr>
         </tbody>
       </table>
     </div>
@@ -411,7 +411,7 @@ footer.site-footer a { color: var(--accent); }
     </details>
     <details class="faq-item">
       <summary>扶養控除の対象になる家族の範囲を教えてください。</summary>
-      <p>年間の合計所得金額が58万円以下(給与収入のみなら年収132万円以下が目安、令和7年度税制改正により48万円/103万円から引き上げ)の16歳以上の親族が、一般的な扶養控除(38万円)の対象です。19歳以上23歳未満の特定扶養親族や70歳以上の老人扶養親族は控除額が異なりますが、本ツールでは簡易化のため一律38万円で計算しています。</p>
+      <p>年間の合計所得金額が62万円以下(給与収入のみなら年収136万円以下が目安、令和7・8年度税制改正により48万円/103万円から引き上げ)の16歳以上の親族が、一般的な扶養控除(38万円)の対象です。19歳以上23歳未満の特定扶養親族や70歳以上の老人扶養親族は控除額が異なりますが、本ツールでは簡易化のため一律38万円で計算しています。</p>
     </details>
     <details class="faq-item">
       <summary>年末調整で追加徴収になることはありますか？</summary>
@@ -482,13 +482,16 @@ footer.site-footer a { color: var(--accent); }
     return 1950000;
   }
 
-  // 所得税の基礎控除（令和7・8年分の時限措置。国税庁「基礎控除の見直し等」にもとづく）
+  // 所得税の基礎控除（令和8年分。本則62万円＋特例加算：合計所得489万円以下は42万円、655万円以下は5万円。
+  // 令和8年度税制改正・国税庁タックスアンサーNo.1199にもとづく。引数は給与所得＝合計所得金額とみなす）
   function basicDeduction(salaryIncome) {
-    if (salaryIncome <= 1320000) return 950000;
-    if (salaryIncome <= 3360000) return 880000;
-    if (salaryIncome <= 4890000) return 680000;
-    if (salaryIncome <= 6550000) return 630000;
-    return 580000;
+    if (salaryIncome <= 4890000) return 1040000;
+    if (salaryIncome <= 6550000) return 670000;
+    if (salaryIncome <= 23500000) return 620000;
+    if (salaryIncome <= 24000000) return 480000;
+    if (salaryIncome <= 24500000) return 320000;
+    if (salaryIncome <= 25000000) return 160000;
+    return 0;
   }
 
   function socialInsurance(income, ageGroup) {
